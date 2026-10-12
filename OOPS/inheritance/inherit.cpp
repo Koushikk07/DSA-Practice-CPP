@@ -30,10 +30,19 @@ public:
     }
 };
 
+class audi : public Car
+{
+public:
+    void stop()
+    {
+        cout << " Car Stopped!" << endl;
+    }
+};
 int main()
 {
-    Car tata;
+    audi tata;
     tata.start();
     tata.drive();
+    tata.stop();
     return 0;
 }
