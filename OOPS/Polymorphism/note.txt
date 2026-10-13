@@ -1,0 +1,76 @@
+ability of objects to take on different forms or behave in different ways depending on context in which they are used.
+
+Polymorphism means many forms: the ability of a function, method or object to behave differently in different contexts.
+
+types:
+
+1. Compile-time Polymorphism / State Binding
+
+def: also known as early Binding
+   the method executed is detemined at comiple time.based on method signature(name + params)
+
+
+ ex: you can call someone using their name, number or nickname -- all are valid call, depending on what info you have
+
+
+
+  1.function/method overloading
+
+   allows a class to have more than one method with same name but params different.
+
+
+    refer: CTP-staticBind.cpp
+
+    rules:  
+    method name same
+    params different
+    return type alone doesnt matter
+
+
+  2. operator overloading
+
+  allows to redefine the behavior of operators(+- etc) for user-defined types
+
+
+
+
+
+
+2. Runtime Polymorphism / Dynamic Binding
+
+  also called Dynamic dispatch / late Binding
+
+  in runtime Polymorphism, the method that is executed is detemined at runtime, not at compile time.
+
+  it allows us to call the correct overrided method based on the actual object type, even if we are using a base class reference or pointer.
+
+  same method name is called via base type but behaves based on the derived object.
+
+
+   1. method overriding
+
+   > Method overriding means redefining a base class method in a derived class using the same method name, params and return type.
+
+   > It allows a derived class to provide its own implementation of a method defined in its base class.
+
+   refer : RTP-DB.cpp
+
+
+    rules:
+
+     method name same params differs , return type must be same
+
+
+   2. virtual function  
+   
+    member Function is the base class that you expect to be override in dervied classes.
+
+    declaring a function virtual tells to complier to use runtime biding instead of compile time.
+
+    Why use virtual functions?
+
+    with virtual c++ binds funcs at compile time based on the pointer referencetype, not actual obj type
+
+    with virtual, c++ defers the decision until runtime,so the correct overriden func in called.
+
+     refer: RTP-DP try without virtual it prints animal speaks

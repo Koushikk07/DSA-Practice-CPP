@@ -1,0 +1,28 @@
+hiding all unnecessary/ internal implementation details and showing only the relevant / essential features.
+
+Achieved via abstract classes with pure virtual function cpp or abstract classes / interfaces (java)
+
+ex: mobile by tapping icons , without knowing internal code behind apps
+
+note: 
+
+in c++, abstraction can be partially Achieved using access specifiers, but full abstraction is implementation through
+abstract classes with pure virtual function.
+
+
+
+
+ABSTRACT CLASSES AND PURE virtual
+
+abstract class:
+class that cannot be instantiated
+contains at least one pure virtual function
+provide a base interface that must be implementated by derived function
+
+
+
+PURE VIRTUAL function:
+
+function declared in a base class that has no definition in that class and must be overriden in derived classes
+
+The = 0 makes a function, apure virtual function
