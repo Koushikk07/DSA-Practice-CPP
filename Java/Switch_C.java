@@ -36,7 +36,7 @@ public class Switch_C {
                 break;
             }
             default: {
-                System.out.println("Invalid Input");
+                System.out.println("Invalid Day");
             }
         }
 
