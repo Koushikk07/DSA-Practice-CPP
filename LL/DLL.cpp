@@ -1,13 +1,11 @@
 #include <iostream>
-#include <stdio.h>
 #include <bits/stdc++.h>
 using namespace std;
-
 class Node
 {
 public:
-    int data;
     Node *back;
+    int data;
     Node *next;
 
 public:
@@ -15,7 +13,7 @@ public:
     {
         data = data1;
         next = next1;
-        back = back1;
+        back1 = back;
     }
 
 public:
@@ -26,8 +24,7 @@ public:
         back = nullptr;
     }
 };
-
-Node *ConArrToDLL(vector<int> &arr)
+Node *convertArr2Dll(vector<int> &arr)
 {
     Node *head = new Node(arr[0]);
     Node *prev = head;
@@ -39,79 +36,99 @@ Node *ConArrToDLL(vector<int> &arr)
     }
     return head;
 }
-
 void print(Node *head)
 {
-    Node *temp = head;
-    while (temp != NULL)
+
+    while (head != nullptr)
     {
-        cout << temp->data << "->";
-        temp = temp->next;
+        cout << head->data << " ";
+
+        head = head->next;
     }
 }
-
-Node *DelHead(Node *head)
-{
-    Node *newHead = head->next;
-    head->next = nullptr;
-    newHead->back = nullptr;
-    delete head;
-    return newHead;
-}
-
-Node *delTail(Node *head)
+Node *deleteTail(Node *head)
 {
     Node *temp = head;
 
-    while (temp->next != NULL)
+    while (temp->next != nullptr)
     {
+
         temp = temp->next;
     }
-    Node *newTail = temp->back;
-    newTail->next = nullptr;
+    Node *newPrev = temp->back;
+    newPrev->next = nullptr;
     temp->back = nullptr;
     delete temp;
     return head;
 }
-Node *delKth(Node *head, int k)
+Node *deleteHead(Node *head)
+{
+    Node *prev = head;
+    head = head->next;
+    head->back = nullptr;
+    prev->next = nullptr;
+    return head;
+}
+Node *deleteKth(Node *head, int k)
 {
     Node *temp = head;
-    Node *front = head;
-    Node *prev = head;
     int cnt = 0;
-    while (temp != NULL)
+    while (temp != nullptr)
     {
         cnt++;
         if (cnt == k)
-        {
-            prev->next = front;
-            front->back = prev;
-            temp->back = nullptr;
-            temp->next = nullptr;
-            delete temp;
             break;
-        }
         temp = temp->next;
-        prev = temp->back;
-        front = temp->next;
     }
+    Node *prev = temp->back;
+    Node *front = temp->next;
+    if (prev == nullptr && front == nullptr)
+    {
+
+        return nullptr;
+    }
+    else if (prev == nullptr)
+    {
+        return deleteHead(head);
+    }
+    else if (front == nullptr)
+    {
+        return deleteTail(head);
+    }
+
+    prev->next = front;
+    front->back = prev;
+    temp->next = nullptr;
+    temp->back = nullptr;
+    delete temp;
+
     return head;
 }
-int MidVal(Node *head)
+void deleteNode(Node *temp)
 {
-    Node *fast = head;
-    Node *slow = head;
-    while (fast->next != NULL)
+    Node *prev = temp->back;
+    Node *front = temp->next;
+    if (front == nullptr)
     {
-        fast = fast->next->next;
-        slow = slow->next;
+        prev->next = nullptr;
+        front->back = nullptr;
+        delete temp;
+        return;
     }
-    return slow->data;
+    prev->next = front;
+    front->back = prev;
+
+    temp->next = temp->back = nullptr;
+    delete temp;
 }
+
 int main()
 {
-    vector<int> arr = {1, 2, 3, 4, 5,7,9};
-    Node *head = ConArrToDLL(arr);
-    int ans = MidVal(head);
-    cout << ans;
+    vector<int> arr = {4, 7, 3, 7, 12};
+    Node *head = convertArr2Dll(arr);
+    // cout << deleteHead(head)->data;
+    // head = deleteKth(head, 3);
+    deleteNode(head->next);
+    print(head);
+    return 0;
 }

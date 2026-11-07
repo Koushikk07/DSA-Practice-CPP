@@ -14,26 +14,21 @@ public:
         data = data1;
         next = next1;
     }
-
     Node(int data1)
     {
         data = data1;
-        next = nullptr;
+        next = NULL;
     }
 };
-
-Node *ArrToLL(vector<int> arr)
+Node *convertArr(vector<int> &arr)
 {
-    int n = arr.size();
     Node *head = new Node(arr[0]);
     Node *mover = head;
-
-    for (int i = 1; i < n; i++)
+    for (int i = 1; i < arr.size(); i++)
     {
         Node *temp = new Node(arr[i]);
         mover->next = temp;
         mover = temp;
-        ;
     }
     return head;
 }
@@ -42,107 +37,122 @@ void print(Node *head)
     Node *temp = head;
     while (temp != NULL)
     {
-        cout << temp->data << "->";
+        cout << temp->data << " ";
         temp = temp->next;
     }
 }
-Node *insertHead(Node *head, int newHead)
+int lengthOfLL(Node *head)
 {
+    int cnt = 0;
     Node *temp = head;
-    Node *newH = new Node(newHead, head);
-
-    return newH;
-}
-Node *insertEnd(Node *head, int end)
-{
-    Node *temp = head;
-    while (temp->next != NULL)
+    while (temp)
     {
+        // cout << temp->data << " ";
         temp = temp->next;
+        cnt++;
     }
-    // cout<<temp->data<<endl;
-    Node *newNode = new Node(end);
-    temp->next = newNode;
+    return cnt;
+}
+bool checkIf(Node *head, int val)
+{
+    Node *temp = head;
+    while (temp)
+    {
+        if (temp->data == val)
+            return true;
+        else
+        {
+            temp = temp->next;
+        }
+    }
+    return false;
+}
+Node *deleteHead(Node *head)
+{
+    Node *temp = head;
+    head = head->next;
+    delete temp;
     return head;
 }
-
-Node *DeleteHead(Node *head)
+Node *deleteTail(Node *head)
 {
+    if (head == NULL || head->next == NULL)
+        return NULL;
 
-    Node *newHead = head->next;
-    delete head;
-
-    return newHead;
-}
-
-Node *DeleteTail(Node *head)
-{
     Node *temp = head;
-
     while (temp->next->next != NULL)
     {
         temp = temp->next;
     }
     delete temp->next;
-    temp->next = nullptr;
+    temp->next = NULL;
     return head;
 }
-
-Node *DelKth(Node *head, int k)
+Node *deleteKthElement(Node *head, int key)
 {
-    if (k == 1)
+    if (head == NULL)
+        return head;
+    if (key == 1)
     {
-        DeleteHead(head);
+        Node *temp = head;
+        head = head->next;
+        delete temp;
+        return head;
     }
-
     int cnt = 0;
     Node *temp = head;
-    Node *prev = nullptr;
+    Node *prev = NULL;
     while (temp != NULL)
     {
         cnt++;
-        if (cnt == k)
+        if (cnt == key)
         {
             prev->next = prev->next->next;
             delete temp;
-
             break;
         }
-    
-    prev = temp;
-    temp = temp->next;
+        prev = temp;
+        temp = temp->next;
     }
     return head;
 }
-Node* DelKthEle(Node* head,int val)
+Node *removeElement(Node *head, int element)
 {
-    if(head->data==val)
+    if (head == NULL)
+        return nullptr;
+    if (head->data == element)
     {
-        DeleteHead(head);
-        return head;;
+        Node *temp = head;
+        head = head->next;
+        delete temp;
+        return head;
     }
-
-    Node* temp=head;
-    Node* prev=nullptr;
-    while(temp!=nullptr)
+    Node *temp = head;
+    Node *prev = NULL;
+    while (temp != NULL)
     {
-        if(temp->data==val)
+
+        if (temp->data == element)
         {
-            prev->next=prev->next->next;
+            prev->next = prev->next->next;
             delete temp;
             break;
         }
-        prev=temp;
-        temp=temp->next;
-        return head;
-
+        prev = temp;
+        temp = temp->next;
     }
+    return head;
 }
 int main()
+
 {
-    vector<int> arr = {1, 3, 4, 5, 6, 3, 6, 23};
-    Node *head = ArrToLL(arr);
-    head = DelKthEle(head, 4);
+    vector<int> arr = {2, 5, 6, 7, 8, 8};
+    Node *head = convertArr(arr);
+    // cout << lengthOfLL(head);
+    // print(head);
+    // cout << checkIf(head, 11);
+    // cout << deleteHead(head)->data;
+    // deleteTail(head);
+    removeElement(head, 7);
     print(head);
-    return 0;
 }
